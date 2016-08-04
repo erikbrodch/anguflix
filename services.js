@@ -8,14 +8,26 @@ app.service('movieServices', function(){
         {img:"http://www.cgmeetup.net/forums/uploads/gallery/album_1392/med_gallery_646_1392_48130.jpg",title: "Beauty and the Beast", year: 2016, descrShort:"Basically the same as the original, except now Hermi-- Emma Wattson plays Belle, fittingly so I would think, given how breath-takingly pretty she is. I mean wow. Rumor has it she'll whip out a wand and turn Gaston into a toad."}
     ];
 
-  var userCollection = [];
+  var myMovies = []
+  var budget = {
+    currentBudget: 9
+  }
 
-  var addMovieToCollection = function() {
+  var addMovieToMyMovies = function(index) {
+      if(budget.currentBudget === 0){
+        alert ("you are too poor");
+        }
+      else {
+      myMovies.push(allMovies[index]);
+      budget.currentBudget-= 3;
+    }
 
   }
 
   var removeMovieFromCollection = function(index) {
+    myMovies.splice([index], 1)
+    budget.currentBudget+= 3;
 
   }
-  return{allMovies: allMovies}
+  return{allMovies: allMovies, myMovies: myMovies, addMovieToMyMovies: addMovieToMyMovies, removeMovieFromCollection: removeMovieFromCollection, budget: budget}
 });

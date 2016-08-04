@@ -6,12 +6,15 @@
   <link rel="stylesheet" type="text/css" href="node_modules/bootstrap/dist/css/bootstrap.min.css">
   <link rel="stylesheet" type="text/css" href="node_modules/font-awesome/css/font-awesome.css">
 </head>
-<body ng-app="movieApp">
+<body ng-app="movieApp"  ng-controller="allMovieCntrl">
 <!-- nevigation bar -->
   <nav class="navbar-default">
   <div class="container-fluid">
     <div class="navbar-header">
       <h1>My Collection<i class="fa fa-film" aria-hidden="true"></i></h1><br>
+      <ul class="nav navbar-nav navbar-right">
+        <li>your balance is US$ {{budget.currentBudget}}:</li>
+      </ul>
       <form class="navbar-form navbar-left">
         <div class="form-group">
           <input type="text" class="form-control" placeholder="Search">
@@ -19,7 +22,7 @@
       </form>
       <form class="navbar-form navbar-left">
         <div class="form-group">
-          <input type="text" class="form-control" placeholder="type year">  <i class="fa fa-trash fa-2x" aria-hidden="true"></i>
+          <input type="text" class="form-control" placeholder="type year"> <i class="fa fa-trash fa-2x" aria-hidden="true" ng-click="showme=true"></i>
         </div>
       </form>
     </div>
@@ -28,11 +31,29 @@
 <!-- my collection section -->
 <section class="my-collection">
 <h3 class="text-center">Select movies from below to add to your collection</h3>
+<div class="row">
+  <div class="col-md-4" ng-repeat="movie in myMovies">
+    <a href="#" class="">
+    <div class="thumbnail">
+      <img src="{{movie.img}}" class="card-img-top img-responsive">
+      <button type="button" class="btn btn-danger center-block" ng-show="showme" ng-click="removeMovieFromCollection($index)">Remove</button>
+      <div class="caption">
+        <h3>{{movie.title}}</h3>
+        <p>{{movie.descrShort}}</p><br>
+        <p class="text-center">{{movie.year}}</p>
+      </div>
+    </div>
+    </a>
+  </div>
+</div>
 </section>
 <hr class="hr">
 
 <!-- all movies section -->
-<section class="all-movies" ng-controller="allMovieCntrl">
+<section class="all-movies">
+ <nav class="navbar-default">
+  <div class="container-fluid">
+    <div class="navbar-header">
   <h3>All movies</h3>
   <form class="navbar-form navbar-left">
     <div class="form-group">
@@ -43,18 +64,22 @@
   <br>
 <!--   show movie cards -->
 <div class="row">
-  <div class="col-md-4" ng-repeat="movie in allMovies">
+  <div class="col-md-4" ng-repeat="movie in allMovies" ng-click="addMovieToMyMovies($index)">
+    <a href="#" class="">
     <div class="thumbnail">
-      <img src="{{movie.img}}" alt="...">
+      <img src="{{movie.img}}" class="card-img-top img-responsive">
       <div class="caption">
-        <h3>Thumbnail label</h3>
-        <p>...</p>
-        <p><a href="#" class="btn btn-primary" role="button">Button</a> <a href="#" class="btn btn-default" role="button">Button</a></p>
+        <h3>{{movie.title}}</h3>
+        <p>{{movie.descrShort}}</p><br>
+        <p class="text-center">{{movie.year}}</p>
       </div>
     </div>
+    </a>
   </div>
 </div>
-
+</div>
+</div>
+</nav>
 </section>
 
 <script src="node_modules/angular/angular.js"></script>
